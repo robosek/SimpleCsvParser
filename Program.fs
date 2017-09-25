@@ -23,10 +23,7 @@ module Domain =
 module CsvFiles = 
     let getPaths directory = 
         let files = Directory.GetFiles(directory,"*.csv")
-        if files.Length > 0 then
-            Some(files)
-        else
-            None
+        if files.Length > 0 then Some(files) else None
 
     let getFileName filePath = 
         Path.GetFileNameWithoutExtension(filePath)
@@ -48,8 +45,8 @@ module DomainMapper =
 [<EntryPoint>]
 let main argv =
     let filePaths = CsvFiles.getPaths "csv"
-    let psObjectSimulator = new List<obj list option>()
     if filePaths.IsSome then
+        let psObjectSimulator = new List<obj list option>()
         filePaths.Value |> Array.iter((fun filePath -> psObjectSimulator.Add(DomainMapper.mapDomain filePath)))
     else
         printfn "There are no results"  
